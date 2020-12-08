@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="https://graphical.weather.gov/xml/DWMLgen/schema/location.xsd" />
+  <xsd:include schemaLocation="https://graphical.weather.gov/xml/DWMLgen/schema/moreWeatherInformation.xsd" />
+  <xsd:include schemaLocation="https://graphical.weather.gov/xml/DWMLgen/schema/time_layout.xsd" />
+  <xsd:include schemaLocation="https://graphical.weather.gov/xml/DWMLgen/schema/parameters.xsd" />
+  <xsd:complexType name="dataType">
+    <xsd:sequence>
+      <xsd:element minOccurs="1" maxOccurs="unbounded" name="location" type="locationType" />
+      <xsd:element minOccurs="1" maxOccurs="unbounded" name="moreWeatherInformation" type="moreWeatherInformationType" />
+      <xsd:element minOccurs="1" maxOccurs="unbounded" name="time-layout" type="time-layoutElementType" />
+      <xsd:element minOccurs="1" maxOccurs="unbounded" name="parameters" type="parametersType" />
+    </xsd:sequence>
+    <xsd:attribute name="type" use="optional">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="forecast" />
+          <xsd:enumeration value="current observations" />
+          <xsd:enumeration value="analysis" />
+          <xsd:enumeration value="guidance" />
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+</xsd:schema>

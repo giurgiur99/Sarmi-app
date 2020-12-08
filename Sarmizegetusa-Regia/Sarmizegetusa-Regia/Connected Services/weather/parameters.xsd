@@ -1,0 +1,1043 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="parametersType">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="categories" type="categoriesType" />
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="temperature">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+            <xsd:choice>
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true" type="tempValType" />
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="valueList" nillable="true" type="valueListType" />
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="valueWithUncertainty" nillable="true">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="1" name="value" nillable="true" type="tempValType" />
+                    <xsd:choice>
+                      <xsd:element minOccurs="0" maxOccurs="1" name="uncertainty" nillable="true" type="uncertaintyType" />
+                      <xsd:element minOccurs="0" maxOccurs="1" name="numberWithEquality" nillable="true" type="numberWithEqualityType" />
+                    </xsd:choice>
+                  </xsd:sequence>
+                  <xsd:attribute name="type" type="dataSourceType" use="optional" />
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:choice>
+          </xsd:sequence>
+          <xsd:attribute name="type" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="maximum" />
+                <xsd:enumeration value="ekdmos-maximum" />
+                <xsd:enumeration value="minimum" />
+                <xsd:enumeration value="ekdmos-minimum" />
+                <xsd:enumeration value="hourly" />
+                <xsd:enumeration value="rtma-hourly" />
+                <xsd:enumeration value="ekdmos-hourly" />
+                <xsd:enumeration value="dew point" />
+                <xsd:enumeration value="rtma-dew point" />
+                <xsd:enumeration value="ekdmos-dew point" />
+                <xsd:enumeration value="heat index" />
+                <xsd:enumeration value="wind chill" />
+                <xsd:enumeration value="apparent" />
+                <xsd:enumeration value="ekdmos-apparent" />
+                <xsd:enumeration value="8-14 day anomolies" />
+                <xsd:enumeration value="monthly anomolies" />
+                <xsd:enumeration value="seasonal anomolies" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute default="Fahrenheit" name="units">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="Fahrenheit" />
+                <xsd:enumeration value="Celsius" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute name="likelihoodUnits" type="likelihoodUnitsTypes" use="optional" />
+          <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+          <xsd:attribute name="categorical-table" type="xsd:string" use="optional" />
+          <xsd:attribute name="conversion-table" type="xsd:string" use="optional" />
+          <xsd:attribute name="applicable-categories" type="xsd:string" use="optional" />
+          <xsd:attribute name="probability-type" type="probability-typeType" use="optional" />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="precipitation">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+            <xsd:choice>
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true" type="decimalValType" />
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="valueList" nillable="true" type="valueListType" />
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="valueWithUncertainty" nillable="true">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="value" nillable="true" type="decimalValType" />
+                    <xsd:choice>
+                      <xsd:element minOccurs="0" maxOccurs="1" name="uncertainty" nillable="true" type="uncertaintyType" />
+                      <xsd:element minOccurs="0" maxOccurs="1" name="numberWithEquality" nillable="true" type="numberWithEqualityType" />
+                    </xsd:choice>
+                  </xsd:sequence>
+                  <xsd:attribute name="type" type="dataSourceType" use="optional" />
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:choice>
+          </xsd:sequence>
+          <xsd:attribute name="type" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="liquid" />
+                <xsd:enumeration value="rtma-liquid" />
+                <xsd:enumeration value="ekdmos-liquid" />
+                <xsd:enumeration value="snow" />
+                <xsd:enumeration value="ice" />
+                <xsd:enumeration value="8-14 day anomolies" />
+                <xsd:enumeration value="monthly anomolies" />
+                <xsd:enumeration value="seasonal anomolies" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute default="inches" name="units">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="inches" />
+                <xsd:enumeration value="centimeters" />
+                <xsd:enumeration value="hundredths of inches" />
+                <xsd:enumeration value="hundredths of centimeters" />
+                <xsd:enumeration value="meters" />
+                <xsd:enumeration value="kilograms per meter squared" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute name="likelihoodUnits" type="likelihoodUnitsTypes" use="optional" />
+          <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+          <xsd:attribute name="categorical-table" type="xsd:string" use="optional" />
+          <xsd:attribute name="conversion-table" type="xsd:string" use="optional" />
+          <xsd:attribute name="probability-type" type="probability-typeType" use="optional" />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="probability-of-precipitation">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+            <xsd:choice>
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true" type="percentageValType" />
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="valueList" nillable="true" type="valueListType" />
+            </xsd:choice>
+          </xsd:sequence>
+          <xsd:attribute name="type" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="12 hour" />
+                <xsd:enumeration value="floating" />
+                <xsd:enumeration value="ekdmos-6 hour" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute fixed="percent" name="units" type="xsd:string" />
+          <xsd:attribute name="likelihoodUnits" type="likelihoodUnitsTypes" use="optional" />
+          <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+          <xsd:attribute name="categorical-table" type="xsd:string" use="optional" />
+          <xsd:attribute name="conversion-table" type="xsd:string" use="optional" />
+          <xsd:attribute name="applicable-categories" type="xsd:string" use="optional" />
+          <xsd:attribute name="probability-type" type="probability-typeType" use="optional" />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="fire-weather">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true">
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:enumeration value="No Areas" />
+                  <xsd:enumeration value="Critical Areas" />
+                  <xsd:enumeration value="Extremely Critical Areas" />
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+          </xsd:sequence>
+          <xsd:attribute name="type" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="risk from wind and relative humidity" />
+                <xsd:enumeration value="risk from dry thunderstorms" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+          <xsd:attribute name="categorical-table" type="xsd:string" use="optional" />
+          <xsd:attribute name="conversion-table" type="xsd:string" use="optional" />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="convective-hazard">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="outlook">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+                  <xsd:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true">
+                    <xsd:simpleType>
+                      <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="No Thunderstorms" />
+                        <xsd:enumeration value="General Thunderstorms" />
+                        <xsd:enumeration value="Slight Risk of Severe Thunderstorms" />
+                        <xsd:enumeration value="Moderate Risk of Severe Thunderstorms" />
+                        <xsd:enumeration value="High Risk of Severe Thunderstorms" />
+                      </xsd:restriction>
+                    </xsd:simpleType>
+                  </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+                <xsd:attribute name="categorical-table" type="xsd:string" use="optional" />
+                <xsd:attribute name="conversion-table" type="xsd:string" use="optional" />
+              </xsd:complexType>
+            </xsd:element>
+            <xsd:element minOccurs="0" maxOccurs="8" name="severe-component">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+                  <xsd:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true">
+                    <xsd:complexType>
+                      <xsd:simpleContent>
+                        <xsd:extension base="xsd:nonNegativeInteger">
+                          <xsd:attribute name="upper-range" type="percentRange" use="optional" />
+                          <xsd:attribute name="lower-range" type="percentRange" use="optional" />
+                        </xsd:extension>
+                      </xsd:simpleContent>
+                    </xsd:complexType>
+                  </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute name="type" use="required">
+                  <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                      <xsd:enumeration value="tornadoes" />
+                      <xsd:enumeration value="hail" />
+                      <xsd:enumeration value="damaging thunderstorm winds" />
+                      <xsd:enumeration value="extreme tornadoes" />
+                      <xsd:enumeration value="extreme hail" />
+                      <xsd:enumeration value="extreme thunderstorm winds" />
+                      <xsd:enumeration value="severe thunderstorms" />
+                      <xsd:enumeration value="extreme severe thunderstorms" />
+                    </xsd:restriction>
+                  </xsd:simpleType>
+                </xsd:attribute>
+                <xsd:attribute fixed="percent" name="units" type="xsd:string" />
+                <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+                <xsd:attribute name="categorical-table" type="xsd:string" use="optional" />
+                <xsd:attribute name="conversion-table" type="xsd:string" use="optional" />
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="climate-anomaly">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="4" name="weekly" type="anomalyType" />
+            <xsd:element minOccurs="0" maxOccurs="4" name="monthly" type="anomalyType" />
+            <xsd:element minOccurs="0" maxOccurs="4" name="seasonal" type="anomalyType" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="wind-speed">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+            <xsd:choice>
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true" type="wspdValType" />
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="valueWithUncertainty" nillable="true">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="1" name="value" nillable="true" type="wspdValType" />
+                    <xsd:choice>
+                      <xsd:element minOccurs="0" maxOccurs="1" name="uncertainty" nillable="true" type="uncertaintyType" />
+                      <xsd:element minOccurs="0" maxOccurs="1" name="numberWithEquality" nillable="true" type="numberWithEqualityType" />
+                    </xsd:choice>
+                  </xsd:sequence>
+                  <xsd:attribute name="type" type="dataSourceType" use="optional" />
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:choice>
+          </xsd:sequence>
+          <xsd:attribute name="type" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="sustained" />
+                <xsd:enumeration value="rtma-sustained" />
+                <xsd:enumeration value="gust" />
+                <xsd:enumeration value="transport" />
+                <xsd:enumeration value="cumulative34" />
+                <xsd:enumeration value="cumulative50" />
+                <xsd:enumeration value="cumulative64" />
+                <xsd:enumeration value="incremental34" />
+                <xsd:enumeration value="incremental50" />
+                <xsd:enumeration value="incremental64" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute default="knots" name="units">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="knots" />
+                <xsd:enumeration value="meters/second" />
+                <xsd:enumeration value="percent" />
+                <xsd:enumeration value="miles per hour" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+          <xsd:attribute name="categorical-table" type="xsd:string" use="optional" />
+          <xsd:attribute name="conversion-table" type="xsd:string" use="optional" />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="direction">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+            <xsd:choice>
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true" type="wdirValType" />
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="valueWithUncertainty" nillable="true">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="1" name="value" nillable="true" type="wdirValType" />
+                    <xsd:choice>
+                      <xsd:element minOccurs="0" maxOccurs="1" name="uncertainty" nillable="true" type="uncertaintyType" />
+                      <xsd:element minOccurs="0" maxOccurs="1" name="numberWithEquality" nillable="true" type="numberWithEqualityType" />
+                    </xsd:choice>
+                  </xsd:sequence>
+                  <xsd:attribute name="type" type="dataSourceType" use="optional" />
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:choice>
+          </xsd:sequence>
+          <xsd:attribute name="type" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="wind" />
+                <xsd:enumeration value="rtma-wind" />
+                <xsd:enumeration value="swell" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute fixed="degrees true" name="units" type="xsd:string" />
+          <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+          <xsd:attribute name="categorical-table" type="xsd:string" use="optional" />
+          <xsd:attribute name="conversion-table" type="xsd:string" use="optional" />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="cloud-amount">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+            <xsd:choice>
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true" type="percentageValType" />
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="valueWithUncertainty" nillable="true">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="1" name="value" nillable="true" type="percentageValType" />
+                    <xsd:choice>
+                      <xsd:element minOccurs="0" maxOccurs="1" name="uncertainty" nillable="true" type="uncertaintyType" />
+                      <xsd:element minOccurs="0" maxOccurs="1" name="numberWithEquality" nillable="true" type="numberWithEqualityType" />
+                    </xsd:choice>
+                  </xsd:sequence>
+                  <xsd:attribute name="type" type="dataSourceType" use="optional" />
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:choice>
+          </xsd:sequence>
+          <xsd:attribute name="type" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="total" />
+                <xsd:enumeration value="rtma-total" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute fixed="percent" name="units" type="xsd:string" />
+          <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+          <xsd:attribute name="categorical-table" type="xsd:string" use="optional" />
+          <xsd:attribute name="conversion-table" type="xsd:string" use="optional" />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="humidity">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true">
+              <xsd:complexType>
+                <xsd:simpleContent>
+                  <xsd:extension base="xsd:nonNegativeInteger">
+                    <xsd:attribute name="upper-range" type="percentRange" use="optional" />
+                    <xsd:attribute name="lower-range" type="percentRange" use="optional" />
+                  </xsd:extension>
+                </xsd:simpleContent>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+          <xsd:attribute name="type" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="relative" />
+                <xsd:enumeration value="maximum relative" />
+                <xsd:enumeration value="minimum relative" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute fixed="percent" name="units" type="xsd:string" />
+          <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+          <xsd:attribute name="categorical-table" type="xsd:string" use="optional" />
+          <xsd:attribute name="conversion-table" type="xsd:string" use="optional" />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="weather">
+        <xsd:complexType>
+          <xsd:sequence minOccurs="1" maxOccurs="unbounded">
+            <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="unbounded" name="weather-conditions" nillable="true">
+              <xsd:complexType>
+                <xsd:sequence minOccurs="1" maxOccurs="unbounded">
+                  <xsd:element minOccurs="0" maxOccurs="1" name="value" nillable="true">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="visibility" nillable="true">
+                          <xsd:complexType>
+                            <xsd:simpleContent>
+                              <xsd:extension base="xsd:string">
+                                <xsd:attribute default="statute miles" name="units" use="optional">
+                                  <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                      <xsd:enumeration value="statute miles" />
+                                      <xsd:enumeration value="kilometers" />
+                                      <xsd:enumeration value="meters" />
+                                    </xsd:restriction>
+                                  </xsd:simpleType>
+                                </xsd:attribute>
+                              </xsd:extension>
+                            </xsd:simpleContent>
+                          </xsd:complexType>
+                        </xsd:element>
+                      </xsd:sequence>
+                      <xsd:attribute name="coverage" use="optional">
+                        <xsd:simpleType>
+                          <xsd:restriction base="xsd:string">
+                            <xsd:enumeration value="slight chance" />
+                            <xsd:enumeration value="chance" />
+                            <xsd:enumeration value="likely" />
+                            <xsd:enumeration value="occasional" />
+                            <xsd:enumeration value="definitely" />
+                            <xsd:enumeration value="isolated" />
+                            <xsd:enumeration value="scattered" />
+                            <xsd:enumeration value="numerous" />
+                            <xsd:enumeration value="patchy" />
+                            <xsd:enumeration value="areas" />
+                            <xsd:enumeration value="widespread" />
+                            <xsd:enumeration value="periods of" />
+                            <xsd:enumeration value="frequent" />
+                            <xsd:enumeration value="intermittent" />
+                            <xsd:enumeration value="none" />
+                          </xsd:restriction>
+                        </xsd:simpleType>
+                      </xsd:attribute>
+                      <xsd:attribute name="weather-type" use="optional">
+                        <xsd:simpleType>
+                          <xsd:restriction base="xsd:string">
+                            <xsd:enumeration value="freezing drizzle" />
+                            <xsd:enumeration value="freezing rain" />
+                            <xsd:enumeration value="snow showers" />
+                            <xsd:enumeration value="blowing snow" />
+                            <xsd:enumeration value="blowing dust" />
+                            <xsd:enumeration value="rain showers" />
+                            <xsd:enumeration value="ice pellets" />
+                            <xsd:enumeration value="frost" />
+                            <xsd:enumeration value="rain" />
+                            <xsd:enumeration value="hail" />
+                            <xsd:enumeration value="snow" />
+                            <xsd:enumeration value="thunderstorms" />
+                            <xsd:enumeration value="drizzle" />
+                            <xsd:enumeration value="fog" />
+                            <xsd:enumeration value="haze" />
+                            <xsd:enumeration value="smoke" />
+                            <xsd:enumeration value="freezing spray" />
+                            <xsd:enumeration value="ice fog" />
+                            <xsd:enumeration value="freezing fog" />
+                            <xsd:enumeration value="water spouts" />
+                            <xsd:enumeration value="volcanic ash" />
+                            <xsd:enumeration value="ice crystals" />
+                            <xsd:enumeration value="blowing sand" />
+                          </xsd:restriction>
+                        </xsd:simpleType>
+                      </xsd:attribute>
+                      <xsd:attribute name="intensity" use="optional">
+                        <xsd:simpleType>
+                          <xsd:restriction base="xsd:string">
+                            <xsd:enumeration value="very light" />
+                            <xsd:enumeration value="light" />
+                            <xsd:enumeration value="moderate" />
+                            <xsd:enumeration value="heavy" />
+                            <xsd:enumeration value="none" />
+                          </xsd:restriction>
+                        </xsd:simpleType>
+                      </xsd:attribute>
+                      <xsd:attribute name="additive" use="optional">
+                        <xsd:simpleType>
+                          <xsd:restriction base="xsd:string">
+                            <xsd:enumeration value="and" />
+                            <xsd:enumeration value="or" />
+                          </xsd:restriction>
+                        </xsd:simpleType>
+                      </xsd:attribute>
+                      <xsd:attribute name="qualifier" use="optional">
+                        <xsd:simpleType>
+                          <xsd:restriction base="xsd:string">
+                            <xsd:annotation>
+                              <xsd:documentation xml:lang="en">
+                                                                  This expression enforces a comma-delimited list
+                                                               </xsd:documentation>
+                            </xsd:annotation>
+                            <xsd:pattern value="(\p{L}* ?\p{L}*)?(,\p{L}+ ?\p{L}*)*" />
+                          </xsd:restriction>
+                        </xsd:simpleType>
+                      </xsd:attribute>
+                    </xsd:complexType>
+                  </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute name="categorical-table" type="xsd:string" use="optional" />
+                <xsd:attribute name="conversion-table" type="xsd:string" use="optional" />
+                <xsd:attribute name="weather-summary" type="xsd:string" use="optional" />
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+          <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="conditions-icon">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="unbounded" name="icon-link" nillable="true" type="xsd:anyURI" />
+          </xsd:sequence>
+          <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+          <xsd:attribute name="type" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="forecast-NWS" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="hazards">
+        <xsd:complexType>
+          <xsd:sequence minOccurs="1" maxOccurs="unbounded">
+            <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="unbounded" name="hazard-conditions" nillable="true">
+              <xsd:complexType>
+                <xsd:sequence minOccurs="1" maxOccurs="unbounded">
+                  <xsd:element minOccurs="0" maxOccurs="unbounded" name="hazard" nillable="true">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="hazardTextURL" nillable="true" type="xsd:anyURI" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="hazardIcon" nillable="true" type="xsd:anyURI" />
+                      </xsd:sequence>
+                      <xsd:attribute name="hazardCode" type="xsd:string" use="optional" />
+                      <xsd:attribute name="phenomena" use="optional">
+                        <xsd:simpleType>
+                          <xsd:restriction base="xsd:string">
+                            <xsd:enumeration value="Ashfall" />
+                            <xsd:enumeration value="Air Quality" />
+                            <xsd:enumeration value="Air Stagnation" />
+                            <xsd:enumeration value="Blowing Snow" />
+                            <xsd:enumeration value="Brisk Wind" />
+                            <xsd:enumeration value="Blizzard" />
+                            <xsd:enumeration value="Coastal Flood" />
+                            <xsd:enumeration value="Dust Storm" />
+                            <xsd:enumeration value="Blowing Dust" />
+                            <xsd:enumeration value="Excessive Cold" />
+                            <xsd:enumeration value="Excessive Heat" />
+                            <xsd:enumeration value="Excessive Wind" />
+                            <xsd:enumeration value="Areal Flood" />
+                            <xsd:enumeration value="Flash Flood" />
+                            <xsd:enumeration value="Dense Fog" />
+                            <xsd:enumeration value="Flood" />
+                            <xsd:enumeration value="Frost" />
+                            <xsd:enumeration value="Red Flag" />
+                            <xsd:enumeration value="Fire Weather" />
+                            <xsd:enumeration value="Freeze" />
+                            <xsd:enumeration value="Gale" />
+                            <xsd:enumeration value="Hurricane Force Wind" />
+                            <xsd:enumeration value="Hurricane Wind" />
+                            <xsd:enumeration value="Heavy Snow" />
+                            <xsd:enumeration value="Heat" />
+                            <xsd:enumeration value="Hurricane" />
+                            <xsd:enumeration value="High Wind" />
+                            <xsd:enumeration value="Hard Freeze" />
+                            <xsd:enumeration value="Sleet" />
+                            <xsd:enumeration value="Ice Storm" />
+                            <xsd:enumeration value="Lake Effect Snow and Blowing Snow" />
+                            <xsd:enumeration value="Lake Effect Snow" />
+                            <xsd:enumeration value="Low Water" />
+                            <xsd:enumeration value="Lakeshore Flood" />
+                            <xsd:enumeration value="Lake Wind" />
+                            <xsd:enumeration value="Marine" />
+                            <xsd:enumeration value="Special Marine" />
+                            <xsd:enumeration value="Small Craft, for Rough Bar" />
+                            <xsd:enumeration value="Snow and Blowing Snow" />
+                            <xsd:enumeration value="Small Craft" />
+                            <xsd:enumeration value="Hazardous Seas" />
+                            <xsd:enumeration value="Small Craft, for Winds" />
+                            <xsd:enumeration value="Dense Smoke" />
+                            <xsd:enumeration value="Snow" />
+                            <xsd:enumeration value="Storm" />
+                            <xsd:enumeration value="High Surf" />
+                            <xsd:enumeration value="Severe Thunderstorm" />
+                            <xsd:enumeration value="Small Craft, for Hazardous Seas" />
+                            <xsd:enumeration value="Tropical Storm Wind" />
+                            <xsd:enumeration value="Tornado" />
+                            <xsd:enumeration value="Tropical Storm" />
+                            <xsd:enumeration value="Tsunami" />
+                            <xsd:enumeration value="Typhoon" />
+                            <xsd:enumeration value="Freezing Spray" />
+                            <xsd:enumeration value="Wind Chill" />
+                            <xsd:enumeration value="Wind" />
+                            <xsd:enumeration value="Winter Storm" />
+                            <xsd:enumeration value="Winter Weather" />
+                            <xsd:enumeration value="Freezing Fog" />
+                            <xsd:enumeration value="Freezing Rain" />
+                            <xsd:enumeration value="Record High Temperature Possible" />
+                            <xsd:enumeration value="Record Low Temperature Possible" />
+                            <xsd:enumeration value="none" />
+                          </xsd:restriction>
+                        </xsd:simpleType>
+                      </xsd:attribute>
+                      <xsd:attribute name="significance" use="optional">
+                        <xsd:simpleType>
+                          <xsd:restriction base="xsd:string">
+                            <xsd:enumeration value="Watch" />
+                            <xsd:enumeration value="Statement" />
+                            <xsd:enumeration value="Warning" />
+                            <xsd:enumeration value="Advisory" />
+                            <xsd:enumeration value="none" />
+                          </xsd:restriction>
+                        </xsd:simpleType>
+                      </xsd:attribute>
+                      <xsd:attribute name="hazardType" use="optional">
+                        <xsd:simpleType>
+                          <xsd:restriction base="xsd:string">
+                            <xsd:enumeration value="long duration" />
+                            <xsd:enumeration value="short duration" />
+                          </xsd:restriction>
+                        </xsd:simpleType>
+                      </xsd:attribute>
+                      <xsd:attribute name="eventTrackingNumber" type="xsd:integer" use="optional" />
+                      <xsd:attribute name="headline" type="xsd:string" use="optional" />
+                    </xsd:complexType>
+                  </xsd:element>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+          <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element minOccurs="0" maxOccurs="1" name="wordedForecast">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="text" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+          <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+          <xsd:attribute name="dataSource" type="xsd:string" use="optional" />
+          <xsd:attribute name="wordGenerator" type="xsd:string" use="optional" />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="pressure">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true" type="decimalValType" />
+          </xsd:sequence>
+          <xsd:attribute name="type" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="barometer" />
+                <xsd:enumeration value="absolute" />
+                <xsd:enumeration value="mean sea level" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute default="millibars" name="units">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="millibars" />
+                <xsd:enumeration value="pascals" />
+                <xsd:enumeration value="kilopascals" />
+                <xsd:enumeration value="hectopascals" />
+                <xsd:enumeration value="pounds per square inch" />
+                <xsd:enumeration value="inches of mercury" />
+                <xsd:enumeration value="millimeters of mercury" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+          <xsd:attribute name="categorical-table" type="xsd:string" use="optional" />
+          <xsd:attribute name="conversion-table" type="xsd:string" use="optional" />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="probabilisticCondition">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+            <xsd:choice>
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true" type="percentageValType" />
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="valueForRange" nillable="true" type="valueForRangeType" />
+            </xsd:choice>
+          </xsd:sequence>
+          <xsd:attribute name="type" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="LAMP_VIS" />
+                <xsd:enumeration value="LAMP_VISCAT" />
+                <xsd:enumeration value="LAMP_CVIS" />
+                <xsd:enumeration value="LAMP_CVISCAT" />
+                <xsd:enumeration value="LAMP_CLD" />
+                <xsd:enumeration value="LAMP_TP2" />
+                <xsd:enumeration value="LAMP_TC2" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute fixed="percent" name="units" type="xsd:string" />
+          <xsd:attribute name="likelihoodUnits" type="likelihoodUnitsTypes" use="optional" />
+          <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+          <xsd:attribute name="categorical-table" type="xsd:string" use="optional" />
+          <xsd:attribute name="conversion-table" type="xsd:string" use="optional" />
+          <xsd:attribute name="applicable-categories" type="xsd:string" use="optional" />
+          <xsd:attribute name="probability-type" type="probability-typeType" use="optional" />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="water-state">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:choice>
+              <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="waves" nillable="true">
+                  <xsd:complexType>
+                    <xsd:sequence>
+                      <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+                      <xsd:element minOccurs="1" maxOccurs="unbounded" name="value" nillable="true" type="xsd:nonNegativeInteger" />
+                    </xsd:sequence>
+                    <xsd:attribute name="type" use="required">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="wind" />
+                          <xsd:enumeration value="significant" />
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:attribute>
+                    <xsd:attribute default="feet" name="units">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="feet" />
+                          <xsd:enumeration value="meters" />
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:attribute>
+                    <xsd:attribute name="categorical-table" type="xsd:string" use="optional" />
+                    <xsd:attribute name="conversion-table" type="xsd:string" use="optional" />
+                    <xsd:attribute name="period" type="xsd:nonNegativeInteger" use="optional" />
+                    <xsd:attribute name="steepness" type="xsd:nonNegativeInteger" use="optional" />
+                  </xsd:complexType>
+                </xsd:element>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="swell" nillable="true">
+                  <xsd:complexType>
+                    <xsd:sequence>
+                      <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+                      <xsd:sequence>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="value" nillable="true" type="xsd:string" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="direction">
+                          <xsd:complexType>
+                            <xsd:simpleContent>
+                              <xsd:extension base="xsd:nonNegativeInteger">
+                                <xsd:attribute name="upper-range" type="percentRange" use="optional" />
+                                <xsd:attribute name="lower-range" type="percentRange" use="optional" />
+                              </xsd:extension>
+                            </xsd:simpleContent>
+                          </xsd:complexType>
+                        </xsd:element>
+                      </xsd:sequence>
+                    </xsd:sequence>
+                    <xsd:attribute name="type" use="required">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="wind" />
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:attribute>
+                    <xsd:attribute default="feet" name="units">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="feet" />
+                          <xsd:enumeration value="meters" />
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:attribute>
+                    <xsd:attribute name="categorical-table" type="xsd:string" use="optional" />
+                    <xsd:attribute name="conversion-table" type="xsd:string" use="optional" />
+                    <xsd:attribute name="period" type="xsd:nonNegativeInteger" use="optional" />
+                    <xsd:attribute name="steepness" type="xsd:nonNegativeInteger" use="optional" />
+                  </xsd:complexType>
+                </xsd:element>
+              </xsd:sequence>
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="seas">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+                    <xsd:element minOccurs="1" maxOccurs="unbounded" name="value" nillable="true" type="xsd:nonNegativeInteger" />
+                  </xsd:sequence>
+                  <xsd:attribute name="type" use="required">
+                    <xsd:simpleType>
+                      <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="combined" />
+                      </xsd:restriction>
+                    </xsd:simpleType>
+                  </xsd:attribute>
+                  <xsd:attribute default="feet" name="units">
+                    <xsd:simpleType>
+                      <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="feet" />
+                        <xsd:enumeration value="meters" />
+                      </xsd:restriction>
+                    </xsd:simpleType>
+                  </xsd:attribute>
+                  <xsd:attribute name="categorical-table" type="xsd:string" use="optional" />
+                  <xsd:attribute name="conversion-table" type="xsd:string" use="optional" />
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:choice>
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="ice-coverage" type="xsd:nonNegativeInteger" />
+          </xsd:sequence>
+          <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="applicable-location" type="xsd:string" use="required" />
+  </xsd:complexType>
+  <xsd:complexType name="tempValType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:integer">
+        <xsd:attribute name="upper-range" use="optional">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:integer">
+              <xsd:minInclusive value="-459" />
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:attribute>
+        <xsd:attribute name="lower-range" use="optional">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:integer">
+              <xsd:minInclusive value="-459" />
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:attribute>
+        <xsd:attribute name="type" type="dataSourceType" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="wspdValType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:nonNegativeInteger">
+        <xsd:attribute name="upper-range" type="xsd:nonNegativeInteger" use="optional" />
+        <xsd:attribute name="lower-range" type="xsd:nonNegativeInteger" use="optional" />
+        <xsd:attribute name="type" type="dataSourceType" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="wdirValType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:nonNegativeInteger">
+        <xsd:attribute name="upper-range" use="optional">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:nonNegativeInteger">
+              <xsd:maxInclusive value="360" />
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:attribute>
+        <xsd:attribute name="lower-range" use="optional">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:nonNegativeInteger">
+              <xsd:maxInclusive value="360" />
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:attribute>
+        <xsd:attribute name="type" type="dataSourceType" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="percentageValType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:nonNegativeInteger">
+        <xsd:attribute name="upper-range" type="percentRange" use="optional" />
+        <xsd:attribute name="lower-range" type="percentRange" use="optional" />
+        <xsd:attribute name="type" type="dataSourceType" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="decimalValType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:decimal">
+        <xsd:attribute name="upper-range" type="percentRange" use="optional" />
+        <xsd:attribute name="lower-range" type="percentRange" use="optional" />
+        <xsd:attribute name="type" type="dataSourceType" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="anomalyType">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true">
+        <xsd:complexType>
+          <xsd:simpleContent>
+            <xsd:extension base="xsd:nonNegativeInteger">
+              <xsd:attribute name="upper-range" type="percentRange" use="optional" />
+              <xsd:attribute name="lower-range" type="percentRange" use="optional" />
+            </xsd:extension>
+          </xsd:simpleContent>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="type" use="required">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="average temperature above normal" />
+          <xsd:enumeration value="average temperature below normal" />
+          <xsd:enumeration value="average precipitation above normal" />
+          <xsd:enumeration value="average precipitation below normal" />
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+    <xsd:attribute fixed="percent" name="units" type="xsd:string" />
+    <xsd:attribute name="time-layout" type="time-layoutAttributeType" use="required" />
+    <xsd:attribute name="categorical-table" type="xsd:string" use="optional" />
+    <xsd:attribute name="conversion-table" type="xsd:string" use="optional" />
+  </xsd:complexType>
+  <xsd:simpleType name="time-layoutAttributeType">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="k-p\d+[h|d|m|y]-n\d+-\d+" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="decimalValueListType">
+    <xsd:list itemType="xsd:decimal" />
+  </xsd:simpleType>
+  <xsd:simpleType name="integerValueListType">
+    <xsd:list itemType="xsd:integer" />
+  </xsd:simpleType>
+  <xsd:simpleType name="numberValueListType">
+    <xsd:union memberTypes="decimalValueListType integerValueListType" />
+  </xsd:simpleType>
+  <xsd:complexType name="valueListType">
+    <xsd:simpleContent>
+      <xsd:extension base="numberValueListType">
+        <xsd:attribute name="median" type="xsd:decimal" use="optional" />
+        <xsd:attribute name="confidenceInterval50" type="xsd:decimal" use="optional" />
+        <xsd:attribute name="confidenceInterval80" type="xsd:decimal" use="optional" />
+        <xsd:attribute name="skew80" type="xsd:decimal" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="probability-typeType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="nonexceedance" />
+      <xsd:enumeration value="exceedance" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="categoriesType">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+      <xsd:element minOccurs="1" maxOccurs="1" name="categories-key" type="xsd:string" />
+      <xsd:element minOccurs="0" maxOccurs="1" name="valueList" type="valueListType" />
+    </xsd:sequence>
+    <xsd:attribute name="type" use="required">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="ekdmos-cdf-percentiles" />
+          <xsd:enumeration value="ekdmos-qpf-probabilities" />
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+    <xsd:attribute name="probability-type" type="probability-typeType" />
+  </xsd:complexType>
+  <xsd:simpleType name="dataSourceType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="NDFD" />
+      <xsd:enumeration value="RTMA" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="qualifierType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="+/-" />
+      <xsd:enumeration value="+" />
+      <xsd:enumeration value="-" />
+      <xsd:enumeration value="%" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="percentRange">
+    <xsd:restriction base="xsd:nonNegativeInteger">
+      <xsd:maxInclusive value="100" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="likelihoodUnitsTypes">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="percent" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="uncertaintyType">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" maxOccurs="1" name="error">
+        <xsd:complexType>
+          <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+              <xsd:attribute default="+/-" name="qualifier" type="qualifierType" use="optional" />
+            </xsd:extension>
+          </xsd:simpleContent>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="type" use="required">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="analysis error" />
+          <xsd:enumeration value="forecast error" />
+          <xsd:enumeration value="likelihood" />
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+  <xsd:simpleType name="numberWithEqualityType">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="(&gt;|≥|&lt;|≤)?\d{1,3}" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:element name="lt" type="numberValueListType" />
+  <xsd:element name="le" type="numberValueListType" />
+  <xsd:element name="gt" type="numberValueListType" />
+  <xsd:element name="ge" type="numberValueListType" />
+  <xsd:element name="eq" type="numberValueListType" />
+  <xsd:complexType name="valueForRangeType">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true" type="percentageValType" />
+      <xsd:choice>
+        <xsd:element minOccurs="0" ref="gt" />
+        <xsd:element minOccurs="0" ref="ge" />
+      </xsd:choice>
+      <xsd:choice>
+        <xsd:element minOccurs="0" ref="lt" />
+        <xsd:element minOccurs="0" ref="le" />
+      </xsd:choice>
+      <xsd:choice>
+        <xsd:element minOccurs="0" ref="eq" />
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

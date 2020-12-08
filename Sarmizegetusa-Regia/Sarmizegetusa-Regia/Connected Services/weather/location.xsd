@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="https://graphical.weather.gov/xml/DWMLgen/schema/summarizationType.xsd" />
+  <xsd:complexType name="locationType">
+    <xsd:sequence>
+      <xsd:element minOccurs="1" maxOccurs="1" name="location-key" type="xsd:string" />
+      <xsd:element minOccurs="0" maxOccurs="1" name="description" type="xsd:string" />
+      <xsd:choice>
+        <xsd:element minOccurs="0" maxOccurs="1" name="point" type="pointType" />
+        <xsd:element minOccurs="0" maxOccurs="1" name="nws-zone" type="nws-zoneType" />
+        <xsd:element minOccurs="0" maxOccurs="1" name="area" type="areaType" />
+      </xsd:choice>
+      <xsd:element minOccurs="0" maxOccurs="1" name="city" type="cityType" />
+      <xsd:element minOccurs="0" maxOccurs="1" name="area-description" type="xsd:string" />
+      <xsd:choice>
+        <xsd:element minOccurs="0" maxOccurs="1" name="height" type="heightType" />
+        <xsd:element minOccurs="0" maxOccurs="1" name="level" type="levelType" />
+        <xsd:element minOccurs="0" maxOccurs="1" name="layer" type="layerType" />
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="pointType">
+    <xsd:attribute name="latitude" type="xsd:decimal" use="required" />
+    <xsd:attribute name="longitude" type="xsd:decimal" use="required" />
+    <xsd:attribute name="summarization" type="summarizationType" use="optional" />
+  </xsd:complexType>
+  <xsd:complexType name="cityType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="state" type="xsd:string" use="required" />
+        <xsd:attribute name="summarization" type="summarizationType" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="nws-zoneType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="state" type="xsd:string" use="required" />
+        <xsd:attribute name="summarization" type="summarizationType" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="areaType">
+    <xsd:choice>
+      <xsd:element minOccurs="1" maxOccurs="1" name="circle" type="circleType" />
+      <xsd:element minOccurs="1" maxOccurs="1" name="rectangle" type="rectangleType" />
+    </xsd:choice>
+    <xsd:attribute name="area-type" use="optional">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="circle" />
+          <xsd:enumeration value="rectangle" />
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+  <xsd:complexType name="circleType">
+    <xsd:sequence>
+      <xsd:element minOccurs="1" maxOccurs="1" name="point" type="pointType" />
+      <xsd:element minOccurs="1" maxOccurs="1" name="radius" type="radiusType" />
+    </xsd:sequence>
+    <xsd:attribute name="summarization" type="summarizationType" use="optional" />
+  </xsd:complexType>
+  <xsd:complexType name="radiusType">
+    <xsd:attribute name="radius-units" use="required">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="statute miles" />
+          <xsd:enumeration value="kilometers" />
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+  <xsd:complexType name="rectangleType">
+    <xsd:sequence>
+      <xsd:element minOccurs="4" maxOccurs="4" name="point" type="pointType" />
+    </xsd:sequence>
+    <xsd:attribute name="summarization" type="summarizationType" use="optional" />
+  </xsd:complexType>
+  <xsd:complexType name="heightType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:nonNegativeInteger">
+        <xsd:attribute name="datum" type="datumType" use="required" />
+        <xsd:attribute name="height-units" type="height-unitsType" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="levelType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:nonNegativeInteger">
+        <xsd:attribute name="vertical-coordinate" type="xsd:string" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="layerType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:nonNegativeInteger">
+        <xsd:attribute name="vertical-coordinate" type="xsd:string" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="datumType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="surface" />
+      <xsd:enumeration value="mean sea level" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="height-unitsType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="feet" />
+      <xsd:enumeration value="meters" />
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>
